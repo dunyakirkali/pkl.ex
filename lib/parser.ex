@@ -10,7 +10,7 @@ defmodule Parser do
     string("//")
     |> ignore()
     |> repeat(utf8_char(not: ?\n))
-    |> tag(:comment)
+    |> tag(:line_comment)
 
   defparsec(:parse, line_comment)
 end
