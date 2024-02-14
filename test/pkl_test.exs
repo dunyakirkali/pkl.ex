@@ -4,12 +4,29 @@ defmodule PklTest do
 
   test "line_comment" do
     # GIVEN
-    comment_text = "// This is a comment\n"
+    line_comment = "// This is a comment\n"
 
     # WHEN
-    result = Parser.parse(comment_text)
+    result = Parser.parse(line_comment)
 
     # THEN
-    assert result == {:ok, [comment: ~c" This is a comment"], "\n", %{}, {1, 0}, 20}
+    assert result == {:ok, [line_comment: ~c" This is a comment"], "\n", %{}, {1, 0}, 20}
+  end
+
+  test "block_comment" do
+    # GIVEN
+    block_comment = """
+    /*
+      Multiline
+      comment
+    */
+    """
+
+    # WHEN
+    result = Parser.parse(block_comment)
+
+    # THEN
+    assert result ==
+             {:ok, [block_comment: ~c"\n  Multiline\n  comment\n"], "*/\n", %{}, {4, 25}, 25}
   end
 end
