@@ -29,4 +29,16 @@ defmodule PklTest do
     assert result ==
              {:ok, [block_comment: ~c"\n  Multiline\n  comment\n"], "*/\n", %{}, {4, 25}, 25}
   end
+
+  test "decimal integer" do
+    # GIVEN
+    decimal_integer = "num1 = 123"
+
+    # WHEN
+    result = Parser.parse(decimal_integer)
+
+    # THEN
+    assert result ==
+             {:ok, [integer: {:decimal, 123}], "", %{}, {4, 25}, 25}
+  end
 end
